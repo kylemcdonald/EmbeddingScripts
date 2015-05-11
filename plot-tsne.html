@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script type="text/javascript" src="../d3/d3.min.js"></script>
+<style type="text/css">
+body, html {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	text-align: center;
+	font-family: sans-serif;
+	text-shadow:
+		-1px 0 white,
+		0 +1px white,
+      	+1px 0 white,
+      	0 -1px white;
+}
+div {
+	text-align: left;
+	position: absolute;
+	width: 300px;
+	z-index: 10;
+	background-color: white;
+	padding: 5px;
+}
+</style>
+</head>
+<body>
+<script type="text/javascript">
+//Width and height
+var w = 700;
+var h = 700;
+var padding = 10;
+
+//Create SVG element
+var svg = d3.select("body")
+			.append("svg")
+			.attr("width", w+padding*2)
+			.attr("height", h+padding*2);
+
+var tooltip = d3.select("body")
+    .append("div");
+
+d3.text('data/lesmis.txt.1000.norm', function(text) {
+	var dataset = d3.tsv.parseRows(text).map(function(row) {
+		return row.map(function(value) {
+		  return +value;
+		});
+	});
+	// dataset = dataset.slice(1, 100);
+
+	// d3.text('lines.txt', function(lines) {
+	// 	lines = lines.split('\n');
+		var n = dataset.length;
+		for(var i = 0; i < n; i++) {
+			dataset[i] = {
+				position: [
+					padding+dataset[i][0]*w,
+					padding+dataset[i][1]*h
+				],
+				// lines: lines[i],
+				index: i
+			};
+		}
+
+		var lineFunction = d3.svg.line()
+			.x(function (d) {return d.position[0]} )
+        	.y(function (d) {return d.position[1]} );
+		var gLine = svg.append("g");
+		gLine.append("path")
+			.style('fill', 'none')
+			.style('stroke', 'black')
+			.style('opacity', '.3')
+			.attr("d", lineFunction(dataset));
+
+		svg.selectAll("circle")
+			.data(dataset)
+			.enter()
+			.append("circle")
+			.style('fill', function(d) {
+				return d3.hsl('hsl(' + (360. * d.index) / n + ', 100%, 50%)');
+			})
+			.attr("cx", function(d) {
+				return d.position[0];
+			})
+			.attr("cy", function(d) {
+				return d.position[1];
+			})
+			.attr("r", 1)
+			// .on("mouseover", function(d){
+			// 	tooltip.text(d.lines);
+			// 	return tooltip.style("visibility", "visible");
+			// })
+			// .on("mousemove", function(){
+			// 	return tooltip
+			// 		.style("top",(d3.event.pageY-10)+"px")
+			// 		.style("left",(d3.event.pageX+10)+"px");
+			// })
+			// .on("mouseout", function(){
+			// 	return tooltip.style("visibility", "hidden");
+			// });
+
+	// });
+});
+
+</script>
+</body>
+</html>

@@ -36,7 +36,7 @@ After generating `vectors` using one of the above techniques or by providing the
 
 This plots a basic correlation matrix, with the rows sorted by solving a travelling salesperson problem. It will also print a list of labels "sorted by similarity". Output is stored in the input folder as a png file.
 
-### project.sh
+### project-tsne.sh
 
 This takes one argument for the input folder, and will generate `vectors` if they don't exist, either using `tokens-to-vectors.py` or `word-to-vectors.py` depending on which files are present, and then run `bh_tsne` with perplexities of 1, 5, 10, 50, 100 and 500 for both 2d projection and 3d projection. The results are stored in the input folder.
 

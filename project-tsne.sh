@@ -3,11 +3,11 @@ set -x
 function tsne {
 	# run bhtsne in 2d and 3d
 	if [ ! -f $1/$2.tsne ]; then
-		python bh_tsne/bhtsne.py -v -d 2 -p $2 -i $1/vectors -o $1/cache
-		cat $1/cache | python normalize.py > $1/$2.2d.tsne
-		python bh_tsne/bhtsne.py -v -d 3 -p $2 -i $1/vectors -o $1/cache
-		cat $1/cache | python normalize.py > $1/$2.3d.tsne
-		rm $1/cache
+		python bh_tsne/bhtsne.py -v -d 2 -p $2 -i $1/vectors -o $1/.cache
+		cat $1/.cache | python normalize.py > $1/$2.2d.tsne
+		python bh_tsne/bhtsne.py -v -d 3 -p $2 -i $1/vectors -o $1/.cache
+		cat $1/.cache | python normalize.py > $1/$2.3d.tsne
+		rm $1/.cache
 	fi
 	# if tsne succeeds, plot the results, otherwise quit
 	if [ -s $1/$2.2d.tsne ]; then

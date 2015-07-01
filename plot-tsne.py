@@ -51,7 +51,7 @@ for i in range(len(data2d)):
 			# plt.fill(*zip(*polygon), color=data3d[i], edgecolor='black')
 			plt.fill(*zip(*polygon), color=data3d[i])
 
-font_size = 8
+font_size = 10
 max_offset = .05
 print('annotating')
 for i in range(len(data2d)):

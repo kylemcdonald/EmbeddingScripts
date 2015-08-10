@@ -42,8 +42,9 @@ data3d = np.vstack((data3d, [0, 0, 0]))
 labels.append('')
 
 vor = Voronoi(data2d)
+n = len(data2d)
 
-for i in range(len(data2d)):
+for i in range(n):
     if vor.point_region[i] != -1:
 		region = vor.regions[vor.point_region[i]]
 		if not -1 in region:
@@ -51,10 +52,9 @@ for i in range(len(data2d)):
 			# plt.fill(*zip(*polygon), color=data3d[i], edgecolor='black')
 			plt.fill(*zip(*polygon), color=data3d[i])
 
-font_size = 10
 max_offset = .05
 print('annotating')
-for i in range(len(data2d)):
+for i in range(n):
     if vor.point_region[i] != -1:
 		region = vor.regions[vor.point_region[i]]
 		if not -1 in region:
@@ -68,9 +68,11 @@ for i in range(len(data2d)):
 			distance = np.linalg.norm(offset)
 			if distance > max_offset:
 				centroid = origin + offset * (max_offset / distance)
-			plt.annotate(labels[i], centroid,
-				size=font_size, va = 'center', ha = 'center', color='white',
-				path_effects=[pe.withStroke(linewidth=2, foreground='black', alpha=.5)])
+			if n < 750:
+				label = labels[i]
+				plt.annotate(label, centroid,
+					size=5, va = 'center', ha = 'center', color='white',
+					path_effects=[pe.withStroke(linewidth=2, foreground='black', alpha=.5)])
 plt.axis('off')
 plt.xlim([0,1])
 plt.ylim([0,1])

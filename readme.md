@@ -40,8 +40,6 @@ This plots a basic correlation matrix, with the rows sorted by solving a travell
 
 This takes one argument for the input folder, and will generate `vectors` if they don't exist, either using `tokens-to-vectors.py` or `word-to-vectors.py` depending on which files are present, and then run `bh_tsne` with perplexities of 1, 5, 10, 50, 100 and 500 for both 2d projection and 3d projection. The results are stored in the input folder.
 
-The visualization uses the 2d projection to determine locations for the labels/annotations, and to build a voronoi diagram where each cell is colored according to the 3d projection. This can sometimes help visualize whether an adjacency is "strong" (similar colors, nearby in a higher dimensional space) or "weak" (different colors, separated in a higher dimensional space).
-
 ### plot-tsne.py
 
-Besides the argument for the input folder, this script also takes an argument for the perplexity to process using `-p`. It then takes the results of `bh_tsne` and projects it using the 2d projection for placing labels and 3d projection for choosing colors for voronoi cells in the background that can provide a high dimensional intuition for distances in some cases. Output image is saved in the input folder as a pdf file.
+Besides the argument for the input folder, this script also takes an argument for the perplexity to process using `-p`. It then takes the results of `bh_tsne` and projects it using the 2d projection for placing labels and 3d projection for choosing colors for voronoi cells in the background that can provide a high dimensional intuition for distances in some cases: if two adjacent vectors are "strongly" similar they have similar colors (i.e., they are still adjacent in a higher dimensional space. If they are "weakly" similar they have different colors (they become separated in a higher dimensional space). The output image is saved in the input folder as a pdf file.

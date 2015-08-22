@@ -52,23 +52,24 @@ for i in range(n):
 			# plt.fill(*zip(*polygon), color=data3d[i], edgecolor='black')
 			plt.fill(*zip(*polygon), color=data3d[i])
 
+
 max_offset = .05
-print('annotating')
-for i in range(n):
-    if vor.point_region[i] != -1:
-		region = vor.regions[vor.point_region[i]]
-		if not -1 in region:
-			polygon = [vor.vertices[j] for j in region]
-			polygon = np.vstack((polygon, polygon[0])) # close polygon
-			origin = np.array(data2d[i])
-			centroid = np.array(calculate_polygon_centroid(polygon))
-			if centroid[0] > 1 or centroid[0] < 0 or centroid[1] > 1 or centroid[1] < 0:
-				centroid = origin
-			offset = centroid - origin
-			distance = np.linalg.norm(offset)
-			if distance > max_offset:
-				centroid = origin + offset * (max_offset / distance)
-			if n < 750:
+if n < 1000:
+	print('annotating')
+	for i in range(n):
+	    if vor.point_region[i] != -1:
+			region = vor.regions[vor.point_region[i]]
+			if not -1 in region:
+				polygon = [vor.vertices[j] for j in region]
+				polygon = np.vstack((polygon, polygon[0])) # close polygon
+				origin = np.array(data2d[i])
+				centroid = np.array(calculate_polygon_centroid(polygon))
+				if centroid[0] > 1 or centroid[0] < 0 or centroid[1] > 1 or centroid[1] < 0:
+					centroid = origin
+				offset = centroid - origin
+				distance = np.linalg.norm(offset)
+				if distance > max_offset:
+					centroid = origin + offset * (max_offset / distance)
 				label = labels[i]
 				plt.annotate(label, centroid,
 					size=5, va = 'center', ha = 'center', color='white',

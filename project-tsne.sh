@@ -18,12 +18,8 @@ function tsne {
 			python plot-tsne.py -i $1 -p $2
 		fi
 	else
-		if [ ! -s $1/$2.2d.tsne ]; then
-			rm $1/$2.2d.tsne
-		fi
-		if [ ! -s $1/$2.3d.tsne ]; then
-			rm $1/$2.3d.tsne
-		fi
+		rm $1/$2.2d.tsne
+		rm $1/$2.3d.tsne
 		exit
 	fi
 }
@@ -43,10 +39,10 @@ if [ ! -f $1/vectors ]; then
 fi
 
 tsne $1 1
-tsne $1 5
-tsne $1 10
-tsne $1 50
-tsne $1 100
-tsne $1 500
-tsne $1 1000
-tsne $1 5000
+# tsne $1 5
+# tsne $1 10
+# tsne $1 50
+# tsne $1 100
+# tsne $1 500
+# tsne $1 1000
+# tsne $1 5000
